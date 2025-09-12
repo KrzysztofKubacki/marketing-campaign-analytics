@@ -1,0 +1,5 @@
+k,features,silhouette,calinski_harabasz,davies_bouldin,mean_ARI
+3,Recency|TotalPurchases|TotalSpend|AOV|Age|Income|Share_NumWebPurchases|Share_NumCatalogPurchases|Share_NumStorePurchases|Share_NumDealsPurchases,0.2052788608819093,830.2539958396014,1.6519318247615684,0.877131525275914
+4,Recency|TotalPurchases|TotalSpend|AOV|Age|Income|Share_NumWebPurchases|Share_NumCatalogPurchases|Share_NumStorePurchases|Share_NumDealsPurchases,0.16238714964519466,675.3599219205761,1.7958328823028011,0.9682227418772861
+5,Recency|TotalPurchases|TotalSpend|AOV|Age|Income|Share_NumWebPurchases|Share_NumCatalogPurchases|Share_NumStorePurchases|Share_NumDealsPurchases,0.1471678232068361,574.267767132406,1.900581793615056,0.9669111182802339
+6,Recency|TotalPurchases|TotalSpend|AOV|Age|Income|Share_NumWebPurchases|Share_NumCatalogPurchases|Share_NumStorePurchases|Share_NumDealsPurchases,0.14342365222172176,501.80236510457354,1.9458221064501728,0.5339940218928567
