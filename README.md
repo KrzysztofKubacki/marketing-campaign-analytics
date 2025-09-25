@@ -37,56 +37,76 @@ P5/
 └─ README.md
 ```
 Sprints:
-Sprint 1 — ETL (Data Cleaning & QA)
+### Sprint 1 — ETL (Data Cleaning & QA)
 
-Parse dates, normalize categoricals
+- Parse dates, normalize categoricals
 
-Median imputation for Income
+- Median imputation for Income
 
-Business rules for realistic Age
+- Business rules for realistic Age
+- Winsorization (1–99 pct) to cap outliers
+- Normalize binary flags (AcceptedCmp*, Response)
+- QA assertions for data integrity
+**Output**: Data/Interim/marketing_campaign_clean.csv
 
-Winsorization (1–99 pct) to cap outliers
+### Sprint 2 — Feature Engineering
 
-Normalize binary flags (AcceptedCmp*, Response)
+- Derived metrics: TotalSpend, TotalPurchases, AOV, tenure
 
-QA assertions for data integrity
-Output: Data/Interim/marketing_campaign_clean.csv
+- Product basket shares & channel shares (web/catalog/store/deals)
 
-Sprint 2 — Feature Engineering
+- Web conversion proxy
 
-Derived metrics: TotalSpend, TotalPurchases, AOV, tenure
+- CLV proxy = AOV × frequency/month × 12 × margin
 
-Product basket shares & channel shares (web/catalog/store/deals)
+- RFM scoring + business labels (Champions, Loyal, New, At Risk, Regulars)
+**Outputs**: customers_master.csv, rfm_segments.csv
 
-Web conversion proxy
+### Sprint 3 — Customer Segmentation (KMeans + Stability)
 
-CLV proxy = AOV × frequency/month × 12 × margin
+- Correlation pruning, feature scaling
 
-RFM scoring + business labels (Champions, Loyal, New, At Risk, Regulars)
-Outputs: customers_master.csv, rfm_segments.csv
+- Grid search over k = 3…6
 
-Sprint 3 — Customer Segmentation (KMeans + Stability)
+- Model selection by:
 
-Correlation pruning, feature scaling
+  - Silhouette Score
 
-Grid search over k = 3…6
+  -  Calinski–Harabasz / Davies–Bouldin
 
-Model selection by:
+  - Mean ARI stability on subsamples
 
-Silhouette Score
+**Outputs**: cluster_labels.csv, cluster_profile.csv, cluster_model_selection.csv
 
-Calinski–Harabasz / Davies–Bouldin
+### Sprint 4 — Campaign Analytics
 
-Mean ARI stability on subsamples
+- Campaign acceptance by cluster
 
-Final cluster labels + profile table (spend, AOV, response, CLV proxy)
-Outputs: cluster_labels.csv, cluster_profile.csv, cluster_model_selection.csv
+- Segment-level: response, lift vs baseline, ROAS/ROI proxies
 
-Sprint 4 — Campaign Analytics
+- Contact policy: CONTACT if ROI > 0 and Lift > 1
+**Outputs**: ssegment_uplift_roi.csv, campaign_by_cluster.csv, contact_policy.csv (ready for BI dashboards)
+  
+---
 
-Campaign acceptance by cluster
+### Key Insights
+- Segmentation revealed clear clusters differing in income, product mix, and campaign response.
+- RFM scoring allowed mapping traditional labels (Champions, Loyal, At Risk) to actual campaign behavior.
+- Campaign ROI varied strongly by cluster — some segments delivered negative ROI despite high response rates.
+- The contact policy prevented unprofitable contacts by filtering only those segments with both ROI > 0 and positive lift.
 
-Segment-level: response, lift vs baseline, ROAS/ROI proxies
+---
 
-Contact policy: CONTACT if ROI > 0 and Lift > 1
-Outputs: segment_uplift_roi.csv, campaign_by_cluster.csv, contact_policy.csv (ready for BI dashboards)
+### Business Value
+- Higher ROI → focus campaigns on profitable segments instead of blanket targeting.
+- Customer lifetime value perspective → combine CLV proxies with response rates.
+- Data-driven contact policy → ensures marketing spend efficiency and prevents overspending on unprofitable groups.
+
+Tech Stack
+- Python (pandas, numpy, scikit-learn, matplotlib, seaborn)
+- Jupyter Notebook
+- Unsupervised ML (KMeans, stability metrics)
+- Data handling (ETL, QA, feature engineering)
+
+### Author
+Project created as a portfolio / CV project – Krzysztof Kubacki
